@@ -4,6 +4,7 @@ import {
     ListItem,
     List
 } from './style';
+import LazyLoad from "react-lazyload"; //图片懒加载
 import { getCount } from "../../api/utils";
 
 function RecommendList(props) {
@@ -18,7 +19,9 @@ function RecommendList(props) {
                                 <div className="img_wrapper">
                                     <div className="decorate"></div>
                                     {/* 加此参数可以减小请求的图片资源大小 */}
-                                    <img src={item.picUrl + "?param=300x300"} width="100%" height="100%" alt="music" />
+                                    <LazyLoad placeholder={<img width="100%" height="100%" src="https://588ku.com/ycpng/9936060.html" alt="music" />}>
+                                        <img src={item.picUrl + "?param=300x300"} width="100%" height="100%" alt="music" />
+                                    </LazyLoad>
                                     <div className="play_count">
                                         <i className="iconfont play">&#xe885;</i>
                                         <span className="count">{getCount(item.playCount)}</span>
