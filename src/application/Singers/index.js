@@ -1,14 +1,36 @@
-import React from 'react';
-import { renderRoutes } from "react-router-config";
+import React, { useState } from 'react';
+import { NavContainer } from "./style";
+import Horizen from '../../baseUI/horizen-item';
+import { categoryTypes, alphaTypes } from '../../api/config';
 
 function Singers(props) {
-  const { route } = props;
+
+  let [category, setCategory] = useState('');
+  let [alpha, setAlpha] = useState('');
+
+  let handleUpdateAlpha = (val) => {
+    setAlpha(val);
+  }
+
+  let handleUpdateCatetory = (val) => {
+    setCategory(val);
+  }
 
   return (
-    <div>
-      <div>Singers</div>
-      {renderRoutes(route.routes)}
-    </div>
+    <NavContainer>
+      <Horizen
+        list={categoryTypes}
+        title={"分类 (默认热门):"}
+        handleClick={(val) => handleUpdateCatetory(val)}
+        oldVal={category}
+      />
+      <Horizen
+        list={alphaTypes}
+        title={"首字母:"}
+        handleClick={(val) => handleUpdateAlpha(val)}
+        oldVal={alpha}
+      />
+    </NavContainer>
   )
 }
 
