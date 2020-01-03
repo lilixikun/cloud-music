@@ -20,7 +20,6 @@ import {
   changePullDownLoading,
   refreshMoreHotSingerList
 } from './store/actionCreators';
-import { debounce } from "../../api/utils";
 import { categoryTypes, alphaTypes } from '../../api/config';
 
 function Singers(props) {
@@ -54,10 +53,11 @@ function Singers(props) {
 
   // 渲染函数，返回歌手列表
   const renderSingerList = () => {
+    const list = singerList ? singerList.toJS() : [];
     return (
       <List>
         {
-          singerList.map((item, index) => {
+          list.map((item, index) => {
             return (
               <ListItem key={item.accountId + "" + index}>
                 <div className="img_wrapper">
@@ -149,4 +149,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(React.memo(Singers));
+export default connect(mapStateToProps, mapDispatchToProps)(Singers);
