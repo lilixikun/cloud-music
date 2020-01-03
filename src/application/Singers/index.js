@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { connect } from 'react-redux'
 import LazyLoad, { forceCheck } from 'react-lazyload';
 import Scroll from "../../baseUI/scroll"
@@ -21,23 +21,33 @@ import {
   refreshMoreHotSingerList
 } from './store/actionCreators';
 import { categoryTypes, alphaTypes } from '../../api/config';
+import { CategoryDataContext, CHANGE_CATEGORY, CHANGE_ALPHA } from './data'
 
 function Singers(props) {
 
-  let [category, setCategory] = useState('');
-  let [alpha, setAlpha] = useState('');
+  const { data, dispatch } = useContext(CategoryDataContext);
+  // 拿到 category 和 alpha 的值
+  const { category, alpha } = data.toJS();
 
   const { enterLoading, pullUpLoading, pullDownLoading, pageCount, singerList } = props
 
-  const { updateDispatch, pullUpRefreshDispatch, pullDownRefreshDispatch } = props;
+  const { updateDispatch, pullUpRefreshDispatch, pullDownRefreshDispatch, getHotSingerDispatch } = props;
+
+
+  useEffect(() => {
+    if (!singerList.size) {
+      getHotSingerDispatch();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   let handleUpdateAlpha = (val) => {
-    setAlpha(val);
+    dispatch({ type: CHANGE_ALPHA, data: val });
     updateDispatch(category, val);
   }
 
   let handleUpdateCatetory = (val) => {
-    setCategory(val);
+    dispatch({ type: CHANGE_CATEGORY, data: val });
     updateDispatch(val, alpha);
   }
 

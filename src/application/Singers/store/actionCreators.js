@@ -11,9 +11,7 @@ import {
     CHANGE_PULLDOWN_LOADING,
     CHANGE_ENTER_LOADING
 } from './constants';
-import {
-    fromJS
-} from 'immutable';
+import { fromJS } from 'immutable';
 
 
 const changeSingerList = (data) => ({
